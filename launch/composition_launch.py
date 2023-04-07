@@ -34,6 +34,12 @@ def generate_launch_description():
                 name='image_subscriber',
                 extra_arguments=[{'use_intra_process_comms': True}],
             ),
+            ComposableNode(
+                package='cpp_pubsub',
+                plugin='MinimalSubscriber',
+                name='image_subscriber2',
+                extra_arguments=[{'use_intra_process_comms': True}],
+            ),
         ],
         output='screen',
     )

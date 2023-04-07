@@ -31,11 +31,12 @@ class MinimalSubscriber : public rclcpp::Node
   private:
     int count_;
     rclcpp::TimerBase::SharedPtr timer_;
-    void topic_callback(const sensor_msgs::msg::Image::UniquePtr msg)
+    void topic_callback(const sensor_msgs::msg::Image::ConstSharedPtr msg)
     {
       count_++;
       double dt = (this->now() - msg->header.stamp).seconds() * 1e3;
       RCLCPP_INFO(get_logger(), "id = %s, time gap=%f ms, %p", msg->header.frame_id.c_str(), dt, (void *)reinterpret_cast<std::uintptr_t>(msg.get()));
+      // RCLCPP_INFO(get_logger(), "name = %s, id = %s, time gap=%f ms, %p", this->get_name(), msg->header.frame_id.c_str(), dt, (void *)reinterpret_cast<std::uintptr_t>(msg.get()));
     }
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr subscription_;
 };
