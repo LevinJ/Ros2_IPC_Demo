@@ -16,12 +16,14 @@ find_package(std_msgs REQUIRED)
 find_package(class_loader REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(OpenCV REQUIRED)
 
 set(GSCAM_NODE_DEPS
   class_loader
   rclcpp
   rclcpp_components
-  sensor_msgs)
+  sensor_msgs
+  OpenCV)
 
 
 
