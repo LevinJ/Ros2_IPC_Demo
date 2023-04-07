@@ -22,7 +22,7 @@ class MinimalPublisher : public rclcpp::Node
       RCLCPP_INFO(get_logger(), "Publisher, use_intra_process_comms=%d", options.use_intra_process_comms());
       publisher_ = this->create_publisher<sensor_msgs::msg::Image>("topic", 10);
       timer_ = this->create_wall_timer(
-      500ms, std::bind(&MinimalPublisher::timer_callback, this));
+      5ms, std::bind(&MinimalPublisher::timer_callback, this));
     }
 
   private:
