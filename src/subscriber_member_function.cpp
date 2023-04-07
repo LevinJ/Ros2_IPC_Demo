@@ -7,9 +7,10 @@ using std::placeholders::_1;
 class MinimalSubscriber : public rclcpp::Node
 {
   public:
-    MinimalSubscriber()
-    : Node("minimal_subscriber")
+    MinimalSubscriber(const rclcpp::NodeOptions & options)
+    : Node("minimal_subscriber", options)
     {
+      RCLCPP_INFO(get_logger(), "Subscriber, use_intra_process_comms=%d", options.use_intra_process_comms());
       subscription_ = this->create_subscription<std_msgs::msg::String>(
       "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
     }
@@ -22,10 +23,16 @@ class MinimalSubscriber : public rclcpp::Node
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
 };
 
+#include "rclcpp_components/register_node_macro.hpp"
+
+RCLCPP_COMPONENTS_REGISTER_NODE(MinimalSubscriber)  // NOLINT
+
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<MinimalSubscriber>());
+   rclcpp::NodeOptions options;
+  options.use_intra_process_comms(false);
+  rclcpp::spin(std::make_shared<MinimalSubscriber>(options));
   rclcpp::shutdown();
   return 0;
 }
